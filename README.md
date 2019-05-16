@@ -10,3 +10,6 @@ https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Adding_bouncin
 
 Step 1
 - Initialiation of HTML, CSS and JS.
+
+Step 2
+- Use inheritance: Shape > Ball.
