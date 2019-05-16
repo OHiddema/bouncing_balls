@@ -106,24 +106,13 @@ EvilCircle.prototype.collisionDetect = function () {
 
 
 // **************************************************************************************************
+// Code improvement (more compact, same effect)
 
-// Needed to inherit the method's of Shape:
 EvilCircle.prototype = Object.create(Shape.prototype);
-// Set the evilcircle's prototype constructor form Shape to EvilCircle
-Object.defineProperty(EvilCircle.prototype, 'constructor', {
-  value: EvilCircle,
-  enumerable: false,
-  writable: true
-});
+EvilCircle.prototype.constructor = EvilCircle;
 
-// Needed to inherit the method's of Shape:
 Ball.prototype = Object.create(Shape.prototype);
-// Set the ball's prototype contructor form Shape to Ball
-Object.defineProperty(Ball.prototype, 'constructor', {
-  value: Ball,
-  enumerable: false,
-  writable: true
-});
+Ball.prototype.constructor = Ball;
 
 // **************************************************************************************************
 
