@@ -25,6 +25,8 @@ function Shape(x, y, velX, velY, exists) {
   this.exists = exists;
 }
 
+// contrustors ------------------------------------------------------------------------------
+
 // define Ball constructor
 function Ball(x, y, velX, velY, exists, color, size) {
   Shape.call(this, x, y, velX, velY, exists);
@@ -32,11 +34,23 @@ function Ball(x, y, velX, velY, exists, color, size) {
   this.size = size;
 }
 
+// Code improvement (more compact, same effect)
+Ball.prototype = Object.create(Shape.prototype);
+Ball.prototype.constructor = Ball;
+
+// define EvilCircle constructor
 function EvilCircle(x, y, exists) {
   Shape.call(this, x, y, 20, 20, exists);
   this.color = 'white';
   this.size = 10;
 }
+
+// Code improvement (more compact, same effect)
+EvilCircle.prototype = Object.create(Shape.prototype);
+EvilCircle.prototype.constructor = EvilCircle;
+
+
+// prototyping ------------------------------------------------------------------
 
 // define EvilCircle draw method
 EvilCircle.prototype.draw = function () {
@@ -105,16 +119,6 @@ EvilCircle.prototype.collisionDetect = function () {
 
 
 
-// **************************************************************************************************
-// Code improvement (more compact, same effect)
-
-EvilCircle.prototype = Object.create(Shape.prototype);
-EvilCircle.prototype.constructor = EvilCircle;
-
-Ball.prototype = Object.create(Shape.prototype);
-Ball.prototype.constructor = Ball;
-
-// **************************************************************************************************
 
 // define ball draw method
 Ball.prototype.draw = function () {
