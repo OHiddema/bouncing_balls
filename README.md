@@ -13,3 +13,7 @@ Step 1
 
 Step 2
 - Use inheritance: Shape > Ball.
+
+Step 3
+- Use inheritance: Shap > EvilCircle
+- First working application!
