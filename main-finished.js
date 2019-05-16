@@ -16,6 +16,9 @@ function random(min, max) {
   return num;
 }
 
+
+// constructors ------------------------------------------------------------------------------
+
 // define Shape constructor (highest user defined level)
 function Shape(x, y, velX, velY, exists) {
   this.x = x;
@@ -25,8 +28,6 @@ function Shape(x, y, velX, velY, exists) {
   this.exists = exists;
 }
 
-// contrustors ------------------------------------------------------------------------------
-
 // define Ball constructor
 function Ball(x, y, velX, velY, exists, color, size) {
   Shape.call(this, x, y, velX, velY, exists);
@@ -34,7 +35,6 @@ function Ball(x, y, velX, velY, exists, color, size) {
   this.size = size;
 }
 
-// Code improvement (more compact, same effect)
 Ball.prototype = Object.create(Shape.prototype);
 Ball.prototype.constructor = Ball;
 
@@ -45,10 +45,8 @@ function EvilCircle(x, y, exists) {
   this.size = 10;
 }
 
-// Code improvement (more compact, same effect)
 EvilCircle.prototype = Object.create(Shape.prototype);
 EvilCircle.prototype.constructor = EvilCircle;
-
 
 // prototyping ------------------------------------------------------------------
 
@@ -62,8 +60,8 @@ EvilCircle.prototype.draw = function () {
 };
 
 // define EvilCircle update method
-Ball.prototype.checkBounds = function () {
-  if ((this.x + this.size) >= width) {
+EvilCircle.prototype.checkBounds = function () {
+    if ((this.x + this.size) >= width) {
     this.x -= this.size;
   }
 
@@ -85,6 +83,10 @@ EvilCircle.prototype.setControls = function () {
   // This is necessary, because within the onkeydown function, this refers to something else!
   var _this = this;
 
+  // 65 = A = move to the left
+  // 68 = D = move to the right
+  // 87 = W = move up
+  // 83 = X = move down
   window.onkeydown = function (e) {
     if (e.keyCode === 65) {
       _this.x -= _this.velX;
@@ -98,10 +100,11 @@ EvilCircle.prototype.setControls = function () {
   }
 }
 
-
 // define EvilCircle collision detection
 EvilCircle.prototype.collisionDetect = function () {
   for (var j = 0; j < balls.length; j++) {
+    // Elements are NOT removed from the balls array.
+    // Instead, the 'exists' property is set to 'false'
     if (balls[j].exists) {
       var dx = this.x - balls[j].x;
       var dy = this.y - balls[j].y;
@@ -115,10 +118,6 @@ EvilCircle.prototype.collisionDetect = function () {
     }
   }
 };
-
-
-
-
 
 // define ball draw method
 Ball.prototype.draw = function () {
@@ -186,7 +185,7 @@ while (balls.length < 25) {
   paragraph.textContent = 'Ball count: ' + count;
 }
 
-// create the EvilCircle object
+// create the EvilCircle object and put it randomly on the screen
 var evil = new EvilCircle(random(0, width), random(0, height), true);
 evil.setControls();
 
@@ -197,6 +196,8 @@ function loop() {
   ctx.fillRect(0, 0, width, height);
 
   for (var i = 0; i < balls.length; i++) {
+    // We just ignore the balls that don't exist anymore
+    // So they don't get redrawn
     if (balls[i].exists) {
       balls[i].draw();
       balls[i].update();
